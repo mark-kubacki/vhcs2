@@ -1,7 +1,3 @@
-create database {DATABASE_NAME};
-
-use {DATABASE_NAME};
-
 # VHCS(tm) - Virtual Hosting Control System
 # (c) 2001-2005 moleSoftware
 # http://vhcs.net | http://www.molesoftware.com
