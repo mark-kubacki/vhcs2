@@ -1,0 +1,204 @@
+<!--
+	    body {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 10pt;
+        background: #FFFFFF;
+    }
+    table {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 10pt
+    }
+    table.box {
+        border-width: 1px 1px 1px 1px;
+        border-style: solid solid solid solid;
+        border-color: #CCCCCC ;
+        background: #FFFFFF;
+    }
+    td {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 10pt;
+        white-space: nowrap;
+    }
+    td.detail {
+        font-size: 8pt;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    td.text {
+        font-size: 12pt;
+        white-space: nowrap;
+    }
+    td.title {
+        font-size: 12pt;
+        font-weight: bold;
+        color: black;
+        background: #CCCCCC;
+        white-space: nowrap;
+    }
+    td.bold {
+        font-weight: bold;
+        color: #000000;
+        background: #DDDDDD;
+        text-align: center;
+        white-space: nowrap;
+    }
+    td.menu {
+        font-weight: bold;
+        color: #707070;
+        background: #CCCCCC;
+        text-align: center;
+        white-space: nowrap;
+    }
+    td.tooltip {
+        font-size: 8pt;
+        font-weight: normal;
+        text-decoration : none;
+        color: #707070;
+        white-space: nowrap;
+    }
+    td.tooltip:hover {
+        font-size: 8pt;
+        text-decoration : none;
+        font-weight: normal;
+        font-style: normal;
+        color: #707070;
+        white-space: nowrap;
+    }
+    td.tdwarn {
+        font-size: 8pt ;
+        color: #b61e00;
+        text-decoration : none;
+        background: #CCCCCC;
+        text-align: center;
+        white-space: nowrap;
+    }
+    td.tdwarnb {
+        font-size: 10pt ;
+        color: #b61e00;
+        text-decoration : none;
+        background: #FFFFFF;
+        text-align: left;
+        white-space: nowrap;
+    }
+    td.white {
+        color: #707070;
+        text-decoration : none;
+        background: #FFFFFF;
+        text-align: center;
+        white-space: nowrap;
+    }
+    td.box {
+        border-width: 1px 1px 1px 1px;
+        border-style: solid solid solid solid;
+        border-color: #CCCCCC ;
+    }
+    td.box_down {
+        border-width: 0px 0px 1px 0px;
+        border-style: solid solid solid solid;
+        border-color: #CCCCCC ;
+    }
+    td.bold_box {
+        font-weight: bold;
+        color: #000000;
+        background: #DDDDDD;
+        text-align: center;
+        white-space: nowrap;
+        border-width: 1px 1px 1px 1px;
+        border-style: solid solid solid solid;
+        border-color: #CCCCCC ;
+    }
+    span.warn {
+        font-size: 10pt ;
+        color: #b61e00;
+        text-decoration : none;
+    }
+    span.detail {
+        font-size: 8pt ;
+        color: #000000;
+        text-decoration : none;
+        font-weight: normal;
+    }
+    span.swarn {
+        font-size: 8pt ;
+        color: #b61e00;
+        text-decoration : none;
+    }
+    span.dswarn {
+        font-size: 8pt ;
+        color: #666666;
+        text-decoration : none;
+    }
+    a {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 10pt ;
+        color: #000000;
+        text-decoration : underline;
+    }
+    a.copy {
+        font-size: 8pt ;
+        color: #000000;
+        text-decoration : none;
+    }
+    a.warn {
+        font-size: 10pt ;
+        color: #b61e00;
+        text-decoration : underline;
+    }
+    a.swarn {
+        font-size: 8pt ;
+        color: #b61e00;
+        text-decoration : underline;
+    }
+    a:hover {
+        font-family: Verdana, Arial, sans-serif;
+        font-size: 10pt;
+        color: #999999;
+        text-decoration : none;
+    }
+    a:hover.swarn {
+        font-size: 8pt;
+        color: #999999;
+        text-decoration : none;
+    }
+    a:hover.copy {
+        font-size: 8pt ;
+        color: #000000;
+        text-decoration : underline;
+    }
+
+
+	.menu { font-family : Verdana, Arial, sans-serif; font-size : 8pt; color : #004080; }
+	.menu:link { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.menu:hover { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.menu:visited { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080;  }
+	.navigation { font-family : Verdana, Arial, sans-serif; font-size : 8pt;color : #004080; }
+
+	TD.rempli { font-family : Verdana, Arial, sans-serif; background-color : #66CC99;}
+	TD.memo { font-family : Verdana, Arial, sans-serif; background-color: #FFFFFF;}
+	TD.cent { font-family : Verdana, Arial, sans-serif; background-color: #FFFFFF; text-align: center; font-size : 8pt; color: Black;}
+	TD.right { font-family : Verdana, Arial, sans-serif; background-color: #FFFFFF; text-align: right; font-size : 8pt; color: Black;}
+	TD.headers { font-family : Verdana, Arial, sans-serif; background-color : #E8E8E8; text-align : center; font-size : 8pt; color:  #004080;  }
+	TD.default { font-family : Verdana, Arial, sans-serif; background-color : #FFFFFF; font-size : 8pt;color : Black; }
+	TD.default9 { font-family : Verdana, Arial, sans-serif; background-color : #FFFFFF; font-size : 9pt;color : Black; }
+	TD.headerright { font-family : Verdana, Arial, sans-serif; color: #000000; background-color : #F5F5F5; text-align : right;  font-size : 8pt; }
+	SELECT 	{ font-size : 8pt; }
+
+.button
+{
+	background-color: #E4E4E4;
+    border-style: solid;
+    border-width: 1;
+    border-color: #000000;
+    font-family: arial;
+	color: black;
+    font-size: 10pt;
+    margin: 2px;
+}
+
+	.textbox {
+		color : Black;
+		background-color : #FFFFFF;
+		height : 19px;
+		font-size : 12px;
+	}
+-->

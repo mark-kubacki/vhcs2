@@ -1,0 +1,205 @@
+{config_load file=$umLanguageFile section="Readmsg"}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<title>Webmail - {$umPageTitle|escape:"html"}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+</head>
+<link rel="stylesheet" href="themes/classic/webmail.css" type="text/css">
+
+<script language="JavaScript" src="themes/classic/webmail.js" type="text/javascript"></script>
+
+{$umJS}
+
+<body bgcolor="#ffffff" text="#000000" link="#000000" vlink="#000000" alink="#000000">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" width="100%">
+      <tr>
+          <td background="themes/classic/vhcs_images/mvhcs_horisontal.png" align="center">
+                 <img src="themes/classic/vhcs_images/mvhcs_logo2.gif"><br><br>
+          </td>
+      </tr>
+    </table>
+<br><br><br>
+
+
+
+
+<table cellspacing=2 cellpadding=0 border=0 align=center bgcolor=White width="770" class="box">
+	<tr>
+		<td valign=top width="100%" align=center>
+			<table cellspacing=1 cellpadding=3 width="100%" border=0 bgcolor=#CCCCCC>
+			<tr align="center">
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:goinbox()"><img src="themes/classic/images/inbox.gif" border=0></a><br>
+				<a class="menu" href="javascript:goinbox()">{#messages_mnu#}</a></td>
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:newmsg()"><img src="themes/classic/images/compose.gif" border=0></a><br>
+				<a class="menu" href="javascript:newmsg()">{#compose_mnu#}</a></td>
+
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="#"><img src="themes/classic/images/refresh.gif" border=0></a><br>
+				<a class="menu" href="#">{#refresh_mnu#}</a></td>
+
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:folderlist()"><img src="themes/classic/images/folders.gif" border=0></a><br>
+				<a class="menu" href="javascript:folderlist()">{#folders_mnu#}</a></td>
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:search()"><img src="themes/classic/images/search.gif" border=0></a><br>
+				<a class="menu" href="javascript:search()">{#search_mnu#}</a></td>
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:addresses()"><img src="themes/classic/images/address.gif" border=0></a><br>
+				<a class="menu" href="javascript:addresses()">{#address_mnu#}</a></td>
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:emptytrash()"><img src="themes/classic/images/trash.gif" border=0></a><br>
+				<a class="menu" href="javascript:emptytrash()">{#empty_trash_mnu#}</a></td>
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:prefs()"><img src="themes/classic/images/preferences.gif" border=0></a><br>
+				<a class="menu" href="javascript:prefs()">{#prefs_mnu#}</a></td>
+				<td width=85 bgcolor="#F5F5F5" onMouseOver="this.style.background='#CEE7FF'" onMouseOut="this.style.background='#F5F5F5'"> <a class="menu" href="javascript:goend()"><img src="themes/classic/images/logout.gif" border=0></a><br>
+				<a class="menu" href="javascript:goend()">{#logoff_mnu#}</a></td>
+			</tr></table>		
+		</td></tr>
+		<td valign=top>
+
+			<table cellspacing=1 cellpadding=2 width="100%" border=0 bgcolor=White align=center>
+				<tr>
+
+				</tr>
+			</table>		
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor=#cccccc>
+				<tr>
+					<td bgcolor=white>
+						<table width="100%" border=0 cellspacing=1 cellpadding=0 bgcolor=#ccccc>
+							{$umReplyForm}			
+							<tr>
+								<td bgcolor="#FFFFFF" colspan=2  height="18">
+
+									
+<table border="0" cellspacing="1" cellpadding="0" bgcolor="#F5F5F5">
+  <tr bgcolor="#FFFFFF"> 
+    <td width="55"> 
+      <div align="center"><a href="{$umPreviousLink}" class="menu"><img src="themes/classic/images/readmail/previous.gif" width="29" height="27" border="0" alt="{#previous_mnu#}"><br>{#previous_mnu#}</a></div>
+    </td>
+
+    <td width="55"> 
+      <div align="center"><a href="{$umNextLink}" class="menu"><img src="themes/classic/images/readmail/next.gif" width="29" height="27" border="0" alt="{#next_mnu#}"><br>{#next_mnu#}</a></div>
+    </td>
+    <td width="55"> 
+      <div align="center"><a href="javascript:goback()" class="menu"><img src="themes/classic/images/readmail/back.gif" width="29" height="27" border="0" alt="{#back_mnu#}"><br>{#back_mnu#}</a></div>
+    </td>
+    <td width="55"> 
+      <div align="center"><a href="javascript:reply()" class="menu"><img src="themes/classic/images/readmail/reply.gif" width="29" height="27" border="0" alt="{#reply_mnu#}"><br>{#reply_mnu#}</a></div>
+    </td>
+    <td width="70"> 
+      <div align="center"><a href="javascript:replyall()" class="menu"><img src="themes/classic/images/readmail/reply_toall.gif" width="29" height="27" border="0" alt="{#reply_all_mnu#}"><br>{#reply_all_mnu#}</a></div>
+    </td>
+    <td width="55"> 
+      <div align="center"><a href="javascript:forward()" class="menu"><img src="themes/classic/images/readmail/forward.gif" width="29" height="27" border="0" alt="{#forward_mnu#}"><br>{#forward_mnu#}</a></div>
+    </td>
+    <td width="55"> 
+      <div align="center"><a href="javascript:deletemsg()" class="menu"><img src="themes/classic/images/readmail/delete.gif" width="29" height="27" border="0" alt="{#delete_mnu#}"><br>{#delete_mnu#}</a></div>
+    </td>
+    <td width="55"> 
+      <div align="center"><a href="javascript:printit()" class="menu"><img src="themes/classic/images/readmail/print.gif" width="29" height="27" border="0" alt="{#print_mnu#}"><br>{#print_mnu#}</a></div>
+    </td>
+    <td width="55"> 
+      <div align="center"><a href="javascript:headers()" class="menu"><img src="themes/classic/images/readmail/header.gif" width="29" height="27" border="0" alt="{#headers_mnu#}"><br>{#headers_mnu#}</a></div>
+    </td>
+  </tr>
+</table>
+
+
+
+									
+									
+									
+									
+
+								</td>
+							</tr>
+
+							<tr>
+								<td width="20%" height="18" class="headerright">{#from_hea#} &nbsp;</td>
+								<td class="default" bgcolor="#FFFFFF">
+								{section name=i loop=$umFromList}
+								 &nbsp;<a href="{$umFromList[i].link}" title="{$umFromList[i].title|escape:"html"}">{$umFromList[i].name|default:#no_sender_text#|escape:"html"}</a>
+								{/section}
+								</td>
+							</tr>
+							<tr>
+								<td height="18" class="headerright">{#to_hea#} &nbsp;</td>
+								<td class="default" bgcolor="#FFFFFF">
+								{section name=i loop=$umTOList}{if $firstto eq "no"};{/if}&nbsp;<a href="{$umTOList[i].link}" title="{$umTOList[i].title|escape:"html"}">{$umTOList[i].name|escape:"html"}</a>{assign var="firstto" value="no"}{sectionelse}&nbsp;{#no_recipient_text#}{/section}
+								</td>
+							</tr>	
+
+							{if $umHaveCC}
+								<tr>
+									<td height="18" class="headerright">{#cc_hea#} &nbsp;</td>
+									<td class="default" bgcolor="#FFFFFF">
+									{section name=i loop=$umCCList}{if $firstcc eq "no"};{/if}&nbsp;<a href="{$umCCList[i].link}" title="{$umCCList[i].title|escape:"html"}">{$umCCList[i].name|escape:"html"}</a>{assign var="firstcc" value="no"}{/section}
+									</td>
+								</tr>	
+							{/if}
+
+							<tr>
+								<td height="18" class="headerright">{#subject_hea#} &nbsp;</td>
+								<td class="default" bgcolor="#FFFFFF"> &nbsp;{$umSubject|default:#no_subject_text#|truncate:100:"...":true|escape:"html"}</td>
+							</tr>	
+							<tr>
+								<td height="18" class="headerright">{#date_hea#} &nbsp;</td>
+								<td class="default" bgcolor="#FFFFFF"> &nbsp;{$umDate|date_format:#date_format#}</td>
+							</tr>	
+							{if $umHaveAttachments}
+								<tr bgcolor=silver>
+									<td class="headerright">{#attach_hea#} &nbsp;</td>
+									<td>
+										<table width="100%" border=0 cellspacing=1 cellpadding=0>
+											<tr bgcolor=#f1f1f1>
+												<td class="headers" width="60%"> &nbsp;<b>{#attch_name_hea#}</b> ({#attch_force_hea#})</td>
+												<td class="headers"> &nbsp;<b>{#attch_size_hea#}</b></td>
+												<td class="headers"> &nbsp;<b>{#attch_type_hea#}</b></td>
+
+												{section name=i loop=$umAttachList}
+												<tr>
+													<td class="default" bgcolor="#FFFFFF"> &nbsp;<a href="{$umAttachList[i].normlink}" target=_blank>{$umAttachList[i].name|truncate:30:"...":true|escape:"html"}</a> <a href="{$umAttachList[i].downlink}" target=_blank><img src="./images/download.gif" width="12" height="12" border="0" alt=""></a></td>
+													<td class="right">{$umAttachList[i].size}Kb &nbsp;</td>
+													<td class="default" bgcolor="#FFFFFF"> &nbsp;{$umAttachList[i].type}</td>
+												{/section}
+
+											</td>
+										</table>
+									</td>
+								</tr>	
+							{/if}
+							<tr>
+								<td colspan=2 class="default">
+									<table width="100%" border=0 cellspacing=1 cellpadding=0>
+										<tr>
+											<td width="60%"{$umBackImg}{$umBackColor}><font color=black>{$umMessageBody}</font></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+							<tr>
+								<form name=move action="msglist.php" method=POST>
+										{$umDeleteForm}
+										<td class=default colspan=2  height="18">
+										<a class="menu" href="javascript:deletemsg()">{#delete_mnu#}</a> ::
+										<a class="menu" href="javascript:movemsg()">{#move_mnu#} </a> 
+										<select name="aval_folders">
+											{section name=i loop=$umAvalFolders}
+												<option value="{$umAvalFolders[i].path|escape:"html"}">{$umAvalFolders[i].display|escape:"html"}
+											{/section}
+										</select>
+									</td>
+								</form>
+							</tr>
+							
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+    <table align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" width="100%">
+        <tr>
+            <td background="themes/classic/vhcs_images/mvhcs_horisontal.png" align="center"><br><br></td>
+        </tr>
+    </table>
+</body>
+</html>
