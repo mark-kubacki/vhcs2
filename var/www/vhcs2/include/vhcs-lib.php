@@ -19,9 +19,6 @@
 
 session_start();
 
-//error_reporting(0); 
-error_reporting(E_ALL); // setting for development edition - see all error messages
-
 $include_path = '/var/www/vhcs2/gui/include/';
 
 include ($include_path.'spGzip.php'); 
@@ -49,13 +46,7 @@ $cfg = $cfg_obj->getValues();
 $cfg['DB_TYPE'] = $cfg['DATABASE_TYPE'];
 $cfg['DB_HOST'] = $cfg['DATABASE_HOST'];
 $cfg['DB_USER'] = $cfg['DATABASE_USER'];
-
-$cfg['DB_PASS'] = '';
-
-if ($cfg['DATABASE_PASSWORD'] != '') {
-    /* decrypt database password */
-    $cfg['DB_PASS'] = decrypt_db_password($cfg['DATABASE_PASSWORD']);
-}
+$cfg['DB_PASS'] = $cfg['DATABASE_PASSWORD'];
 
 $cfg['DB_NAME'] = $cfg['DATABASE_NAME'];
 
