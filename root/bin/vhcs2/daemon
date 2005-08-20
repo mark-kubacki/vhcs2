@@ -10,10 +10,13 @@ $cfg['default_shell']	= '/bin/false';
 $path['quotaroot']	= '/var';
 $path['www_vhosts']	= '/var/www';
 $path['etc_vhosts']	= '/etc/apache2/vhosts.d';
+$path['etc_awstats']	= '/etc/awstats';
+$path['lib_awstats']	= '/var/lib/awstats';
 $file['vsftpd_chroot']	= '/etc/vsftpd/chrootUsers';
 
 $template['apache']	= '/etc/apache2/vhosts.d/00_NEW.template';
 $template['apache_sub']	= '/etc/apache2/vhosts.d/00_NEW_SUB.template';
+$template['awstats']	= '/etc/awstats/awstats.NEW.conf';
 
 /////////////// commands ///////////////////
 $cmd['adduser']		= 'useradd -m -d %s -G apache,'.$cfg['usergroup'].' -s %s -p \'%s\' -u %u %s';
@@ -26,6 +29,8 @@ $cmd['remove_document_root']	= 'rm -rf %s';
 $cmd['quota_add']	= 'quotatool -b -u %s -l %uMB -q %uMB '.$path['quotaroot'];
 
 $cmd['apache_restart']	= '/etc/init.d/apache2 restart';
+
+$cmd['remove_awstats_lib']	= 'rm -rf '.$path['lib_awstats'].'./%s';
 
 $cmd['ftp_add']		= 'echo %s >> '.$file['vsftpd_chroot'];
 $cmd['ftp_del']		= 'grep -v \'%s\' '.$file['vsftpd_chroot'].' > '.$file['vsftpd_chroot'].'.new && mv '.$file['vsftpd_chroot'].'.new '.$file['vsftpd_chroot'];
@@ -120,8 +125,16 @@ if(mysql_num_rows($result) > 0) {
 			file_put_contents($new['cfg'], $tmp);
 			mysql_query('UPDATE domain SET domain_status="ok" WHERE domain_id='.$row['domain_id'].' LIMIT 1');
 		    }
-		    else {
-			echo($tmp);
+
+		    // add eveything for awstats
+		    if(is_dir($path['lib_awstats'])
+			&& !is_file($path['etc_awstats'].'/awstats.'.$new['username'].'.conf')) {
+			echo('  . generating config-file for Awstats'."\n");
+			$tmp = file_get_contents($template['awstats']);
+			$tmp = str_replace(array_keys($replacement), array_values($replacement), $tmp);
+			if(!$cfg['dry_run']) {
+			    file_put_contents($path['etc_awstats'].'/awstats.'.$new['username'].'.conf');
+			}
 		    }
 		}
 		break;
@@ -130,8 +143,14 @@ if(mysql_num_rows($result) > 0) {
 		enter(sprintf($cmd['deluser'], $new['username']));
 		enter(sprintf($cmd['ftp_del'], $new['username']));
 		$apache_restart = true;
-		if(!$cfg['dry_run'] && is_file($new['cfg'])) {
-		    unlink($new['cfg']);
+		if(!$cfg['dry_run']) {
+		    if(is_file($new['cfg'])) {
+			unlink($new['cfg']);
+		    }
+		    if(is_file($path['etc_awstats'].'/awstats.'.$new['username'].'.conf')) {
+			unlink($path['etc_awstats'].'/awstats.'.$new['username'].'.conf');
+			enter(sprintf($cmd['remove_awstats_lib'], $new['username']));
+		    }
 		}
 		if(!$cfg['dry_run']) {
 		    mysql_query('DELETE FROM domain WHERE domain_id='.$row['domain_id'].' LIMIT 1');
@@ -218,9 +237,6 @@ if(mysql_num_rows($result) > 0) {
 		    if(!$cfg['dry_run']) {
 			file_put_contents($new['cfg'], $tmp);
 			mysql_query('UPDATE subdomain SET subdomain_status="ok" WHERE subdomain_id='.$row['subdomain_id'].' LIMIT 1');
-		    }
-		    else {
-			echo($tmp);
 		    }
 		}
 		$apache_restart = true;
