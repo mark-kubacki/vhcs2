@@ -36,6 +36,7 @@ CREATE TABLE `admin` (
 #
 
 # INSERT INTO `admin` VALUES (1, 'admin', 'nv1irO7LNuRoY', 'admin', 0, NULL, 1, 'Alexander', 'Kotov', 'moleSoftware GmbH', '80686', 'München', 'Germany', 'alex@molesoftware.com', '+49 89 215 80 394', '+49 89 215 80 395', 'Fürstenrieder Str 133', '');
+INSERT INTO `admin` VALUES (1, 'admin', 'adpexzg3FUZAk', 'admin', 0, NULL, 1, 'Vorname', 'Nachname', 'ACME Inc.', '99999', 'Hanover', 'Germany', 'me@acme.com', '', '', 'Road 66', '');
 
 # --------------------------------------------------------
 
