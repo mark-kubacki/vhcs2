@@ -1,0 +1,259 @@
+#!/usr/local/bin/php
+<?php
+$cfg['dry_run']		= true;
+
+$cfg['uid_min']		= 500;
+$cfg['usergroup']	= 'users';
+$cfg['default_shell']	= '/bin/false';
+
+/////////////// paths //////////////////////
+$path['quotaroot']	= '/var';
+$path['www_vhosts']	= '/var/www';
+$path['etc_vhosts']	= '/etc/apache2/vhosts.d';
+$file['vsftpd_chroot']	= '/etc/vsftpd/chrootUsers';
+
+$template['apache']	= '/etc/apache2/vhosts.d/00_NEW.template';
+$template['apache_sub']	= '/etc/apache2/vhosts.d/00_NEW_SUB.template';
+
+/////////////// commands ///////////////////
+$cmd['adduser']		= 'useradd -m -d %s -G apache,'.$cfg['usergroup'].' -s %s -p \'%s\' -u %u %s';
+$cmd['deluser']		= 'userdel -r %s';
+$cmd['lockuser']	= 'usermod -L %s';
+$cmd['unlockuser']	= 'usermod -U %s';
+$cmd['create_document_root']	= 'mkdir -m 0755 -p %s && chown %s:apache %s';
+$cmd['remove_document_root']	= 'rm -rf %s';
+
+$cmd['quota_add']	= 'quotatool -b -u %s -l %uMB -q %uMB '.$path['quotaroot'];
+
+$cmd['apache_restart']	= '/etc/init.d/apache2 restart';
+
+$cmd['ftp_add']		= 'echo %s >> '.$file['vsftpd_chroot'];
+$cmd['ftp_del']		= 'grep -v \'%s\' '.$file['vsftpd_chroot'].' > '.$file['vsftpd_chroot'].'.new && mv '.$file['vsftpd_chroot'].'.new '.$file['vsftpd_chroot'];
+
+/////////////// don't edit anything below //
+$output		= '';
+$return_val	= 0;
+$done		= array();
+$apache_restart	= false;
+
+////////////// functions ///////////////////
+function enter($cmd) {
+    global $cfg;
+    global $output;
+    global $return_val;
+
+    if($cfg['dry_run']) {
+	echo('# '.trim($cmd)."\n");
+    }
+    else {
+	exec($cmd, $output, $return_val);
+	return $return_val;
+    }
+}
+
+if(!function_exists('file_put_contents')) {
+function file_put_contents($filename, $data, $file_append = false) {
+        $fp = fopen($filename, (!$file_append ? 'w+' : 'a+'));
+                if(!$fp) {
+                trigger_error('file_put_contents cannot write in file.', E_USER_ERROR);
+                        return;
+                }
+                fputs($fp, $data);
+                fclose($fp);
+        }
+}
+
+////////////// mysql connect ///////////////
+mysql_connect('localhost', 'vhcs2', 'vhcs2geheim') or die('Could not connect to database.');
+mysql_select_db('vhcs2') or die('Could not select database');
+
+/////////////// users? ////////////////////
+$query  = 'SELECT domain_name, domain_name as username, domain_disk_limit as quota, domain_cgi as cgi, domain_status as status, admin_id as id, admin_pass as pass, ip_number, email, domain_id';
+$query .= ' FROM domain,server_ips LEFT JOIN admin ON domain_admin_id=admin_id';
+$query .= ' WHERE (domain_status != "ok" AND domain_status != "disabled") AND domain_ip_id = ip_id';
+$query .= ' ORDER BY domain_id ASC';
+$result = mysql_query($query);
+if(mysql_num_rows($result) > 0) {
+    echo('Number of domains to be processed: '.mysql_num_rows($result)."\n");
+    while($row = mysql_fetch_assoc($result)) {
+	echo('= username   : '.$row['username']."\n");
+	$new	= array('home'		=> $path['www_vhosts'].'/'.$row['username'],
+			'shell'		=> $cfg['default_shell'],
+			'uid'		=> $cfg['uid_min']+$row['id'],
+			'passwd'	=> $row['pass'],
+			'username'	=> $row['username'],
+			'cfg'		=> $path['etc_vhosts'].'/61_'.$row['domain_name'].'.conf',
+			);
+	$new['document_root']	= $new['home'].'/html/'.$row['domain_name'].'/www';
+
+	switch($row['status']) {
+	    case 'toadd':
+		echo("  : adding \n");
+		// Does the user exist or shall we create one?
+		if(!is_dir($new['home'])) {
+		    echo('  - creating homedir : '.$new['home']."\n");
+		    enter(sprintf($cmd['adduser'], $new['home'], $new['shell'], $new['passwd'], $new['uid'], $new['username']));
+		    // set the user's quota
+                    enter(sprintf($cmd['quota_add'], $new['username'], max($row['quota']*1.01, $row['quota']+5), $row['quota']));
+		    // and add the user to vsftpd
+		    enter(sprintf($cmd['ftp_add'], $new['username']));
+		}
+		// Now the domain's directory has to be created.
+                if(!is_dir($new['document_root'])) {
+		    echo('  - creating document_root : '.$new['document_root']."\n");
+		    enter(sprintf($cmd['create_document_root'], $new['document_root'], $new['username'], $new['document_root']));
+		}
+		// Finally we will add an apache-entry.
+                if(!is_file($new['cfg'])) {
+		    $replacement = array('%%ip_number%%'	=> $row['ip_number'],
+					 '%%domain_name%%'	=> $row['domain_name'],
+					 '%%document_root%%'	=> $new['document_root'],
+					 '%%username%%'		=> $new['username'],
+					 '%%usergroup%%'	=> $cfg['usergroup'],
+					 '%%home%%'		=> $new['home'],
+					 '%%ServerAdmin%%'	=> $row['email'],
+					);
+		    $tmp = file_get_contents($template['apache']);
+		    $tmp = str_replace(array_keys($replacement), array_values($replacement), $tmp);
+		    $apache_restart = true;
+		    if(!$cfg['dry_run']) {
+			file_put_contents($new['cfg'], $tmp);
+			mysql_query('UPDATE domain SET domain_status="ok" WHERE domain_id='.$row['domain_id'].' LIMIT 1');
+		    }
+		    else {
+			echo($tmp);
+		    }
+		}
+		break;
+	    case 'delete':
+		echo("  : deleting \n");
+		enter(sprintf($cmd['deluser'], $new['username']));
+		enter(sprintf($cmd['ftp_del'], $new['username']));
+		$apache_restart = true;
+		if(!$cfg['dry_run'] && is_file($new['cfg'])) {
+		    unlink($new['cfg']);
+		}
+		if(!$cfg['dry_run']) {
+		    mysql_query('DELETE FROM domain WHERE domain_id='.$row['domain_id'].' LIMIT 1');
+		}
+		break;
+	    case 'toenable':
+		echo("  : enabling \n");
+		// allow logging in
+		enter(sprintf($cmd['unlockuser'], $row['username']));
+		// make the domain visible
+                if(!is_file($new['cfg'])) {
+		    $replacement = array('%%ip_number%%'	=> $row['ip_number'],
+					 '%%domain_name%%'	=> $row['domain_name'],
+					 '%%document_root%%'	=> $new['document_root'],
+					 '%%username%%'		=> $new['username'],
+					 '%%usergroup%%'	=> $cfg['usergroup'],
+					 '%%home%%'		=> $new['home'],
+					 '%%ServerAdmin%%'	=> $row['email'],
+					);
+		    $tmp = file_get_contents($template['apache']);
+		    $tmp = str_replace(array_keys($replacement), array_values($replacement), $tmp);
+		    $apache_restart = true;
+		    if(!$cfg['dry_run']) {
+			file_put_contents($new['cfg'], $tmp);
+			mysql_query('UPDATE domain SET domain_status="ok" WHERE domain_id='.$row['domain_id'].' LIMIT 1');
+		    }
+		    else {
+			echo($tmp);
+		    }
+		}
+		break;
+	    case 'todisable':
+		echo("  : disabling \n");
+		// prevent the user from logging in
+		enter(sprintf($cmd['lockuser'], $new['username']));
+		// remove domain from apache
+		$apache_restart = true;
+		if(!$cfg['dry_run'] && is_file($new['cfg'])) {
+		    unlink($new['cfg']);
+		    mysql_query('UPDATE domain SET domain_status="disabled" WHERE domain_id='.$row['domain_id'].' LIMIT 1');
+		}
+		break;
+	}
+    }
+
+    mysql_free_result($result);
+}
+
+/////////////// subdomains? //////////////////
+$query  = 'SELECT domain_name, subdomain_name, subdomain_mount, domain_name as username, domain_cgi as cgi, subdomain_status as status, ip_number, email, subdomain_id';
+$query .= ' FROM domain,server_ips,subdomain LEFT JOIN admin ON domain_admin_id=admin_id';
+$query .= ' WHERE (subdomain_status != "ok" AND subdomain_status != "disabled") AND domain_ip_id = ip_id AND subdomain.domain_id = domain.domain_id';
+$result = mysql_query($query);
+if(mysql_num_rows($result) > 0) {
+    echo('Number of domains to be processed: '.mysql_num_rows($result)."\n");
+    while($row = mysql_fetch_assoc($result)) {
+	echo('= username   : '.$row['username']."\n");
+	$new	= array('home'		=> $path['www_vhosts'].'/'.$row['username'],
+			'username'	=> $row['username'],
+			'cfg'		=> $path['etc_vhosts'].'/60_'.$row['domain_name'].'_'.$row['subdomain_name'].'.conf',
+			);
+	$new['document_root']	= $new['home'].'/html/'.$row['domain_name'].$row['subdomain_mount'];
+	switch($row['status']) {
+	    case 'toadd':
+		// create document_root if not already present
+                if(!is_dir($new['document_root'])) {
+		    echo('  - creating document_root : '.$new['document_root']."\n");
+		    enter(sprintf($cmd['create_document_root'], $new['document_root'], $new['username'], $new['document_root']));
+		}
+ 	    case 'toenable':
+		// add entry for apache
+                if(!is_file($new['cfg'])) {
+		    $replacement = array('%%ip_number%%'	=> $row['ip_number'],
+					 '%%domain_name%%'	=> $row['subdomain_name'].'.'.$row['domain_name'],
+					 '%%document_root%%'	=> $new['document_root'],
+					 '%%username%%'		=> $new['username'],
+					 '%%usergroup%%'	=> $cfg['usergroup'],
+					 '%%home%%'		=> $new['home'],
+					 '%%ServerAdmin%%'	=> $row['email'],
+					);
+		    $tmp = file_get_contents($template['apache_sub']);
+		    $tmp = str_replace(array_keys($replacement), array_values($replacement), $tmp);
+		    $apache_restart = true;
+		    if(!$cfg['dry_run']) {
+			file_put_contents($new['cfg'], $tmp);
+			mysql_query('UPDATE subdomain SET subdomain_status="ok" WHERE subdomain_id='.$row['subdomain_id'].' LIMIT 1');
+		    }
+		    else {
+			echo($tmp);
+		    }
+		}
+		$apache_restart = true;
+		break;
+	    case 'delete':
+		// delete document_root
+                if(!is_dir($new['document_root'])) {
+		    echo('  - removing document_root : '.$new['document_root']."\n");
+		    enter(sprintf($cmd['remove_document_root'], $new['document_root']));
+		}
+	    case 'todisable':
+                // remove entry from apache
+		if(!$cfg['dry_run']) {
+		    if(is_file($new['cfg'])) {
+			unlink($new['cfg']);
+		    }
+		    if($row['status'] == 'todisable') {
+			mysql_query('UPDATE subdomain SET subdomain_status="disabled" WHERE subdomain_id='.$row['subdomain_id'].' LIMIT 1');
+		    }
+		    else {
+			mysql_query('DELETE FROM subdomain WHERE subdomain_id='.$row['subdomain_id'].' LIMIT 1');
+		    }
+		}
+		$apache_restart = true;
+		break;
+	}
+    }
+}
+
+
+mysql_close();
+/////////////// restart apache ///////////////
+if($apache_restart) {
+    enter($cmd['apache_restart']);
+}
+?>
