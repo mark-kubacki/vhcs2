@@ -1,0 +1,40 @@
+{config_load file=$umLanguageFile section="BadLogin"}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+	<title>Webmail - {#lgn_title#|escape:"html"}</title>
+<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<link rel="stylesheet" href="themes/classic/webmail.css" type="text/css">
+</head>
+
+<body bgcolor="#ffffff" text="#000000" link="#000000" vlink="#000000" alink="#000000">
+    <table align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" width="100%">
+      <tr>
+          <td background="themes/classic/vhcs_images/mvhcs_horisontal.png" align="center">
+                 <img src="themes/classic/vhcs_images/mvhcs_logo2.gif"><br><br>
+          </td>
+      </tr>
+    </table>
+<br><br><br>
+
+
+			<table align="center" border="0" cellpadding="3" cellspacing="3" class="box"  width="500">		
+				<tr><td align=center class="title">.: <font color=red size=3><b>{#bdl_title#}</b></font> :.</td>
+				<tr><td><br>
+				{#bdl_msg#}<br><br>
+				<a href="./index.php?tid={$umTid}&lid={$umLid}">{#bdl_back#}</a><br><br>
+				</td>
+			</table>
+
+
+    <table align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF" width="100%">
+        <tr>
+            <td background="themes/classic/vhcs_images/mvhcs_horisontal.png" align="center"><br><br></td>
+        </tr>
+    </table>
+
+
+</body>
+</html>

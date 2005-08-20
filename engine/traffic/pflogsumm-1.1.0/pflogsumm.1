@@ -1,0 +1,650 @@
+.rn '' }`
+''' $RCSfile$$Revision$$Date$
+'''
+''' $Log$
+'''
+.de Sh
+.br
+.if t .Sp
+.ne 5
+.PP
+\fB\\$1\fR
+.PP
+..
+.de Sp
+.if t .sp .5v
+.if n .sp
+..
+.de Ip
+.br
+.ie \\n(.$>=3 .ne \\$3
+.el .ne 3
+.IP "\\$1" \\$2
+..
+.de Vb
+.ft CW
+.nf
+.ne \\$1
+..
+.de Ve
+.ft R
+
+.fi
+..
+'''
+'''
+'''     Set up \*(-- to give an unbreakable dash;
+'''     string Tr holds user defined translation string.
+'''     Bell System Logo is used as a dummy character.
+'''
+.tr \(*W-|\(bv\*(Tr
+.ie n \{\
+.ds -- \(*W-
+.ds PI pi
+.if (\n(.H=4u)&(1m=24u) .ds -- \(*W\h'-12u'\(*W\h'-12u'-\" diablo 10 pitch
+.if (\n(.H=4u)&(1m=20u) .ds -- \(*W\h'-12u'\(*W\h'-8u'-\" diablo 12 pitch
+.ds L" ""
+.ds R" ""
+'''   \*(M", \*(S", \*(N" and \*(T" are the equivalent of
+'''   \*(L" and \*(R", except that they are used on ".xx" lines,
+'''   such as .IP and .SH, which do another additional levels of
+'''   double-quote interpretation
+.ds M" """
+.ds S" """
+.ds N" """""
+.ds T" """""
+.ds L' '
+.ds R' '
+.ds M' '
+.ds S' '
+.ds N' '
+.ds T' '
+'br\}
+.el\{\
+.ds -- \(em\|
+.tr \*(Tr
+.ds L" ``
+.ds R" ''
+.ds M" ``
+.ds S" ''
+.ds N" ``
+.ds T" ''
+.ds L' `
+.ds R' '
+.ds M' `
+.ds S' '
+.ds N' `
+.ds T' '
+.ds PI \(*p
+'br\}
+.\"	If the F register is turned on, we'll generate
+.\"	index entries out stderr for the following things:
+.\"		TH	Title 
+.\"		SH	Header
+.\"		Sh	Subsection 
+.\"		Ip	Item
+.\"		X<>	Xref  (embedded
+.\"	Of course, you have to process the output yourself
+.\"	in some meaninful fashion.
+.if \nF \{
+.de IX
+.tm Index:\\$1\t\\n%\t"\\$2"
+..
+.nr % 0
+.rr F
+.\}
+.TH PFLOGSUMM 1 "1.1.0" "12/Dec/2003" "User Contributed Perl Documentation"
+.UC
+.if n .hy 0
+.if n .na
+.ds C+ C\v'-.1v'\h'-1p'\s-2+\h'-1p'+\s0\v'.1v'\h'-1p'
+.de CQ          \" put $1 in typewriter font
+.ft CW
+'if n "\c
+'if t \\&\\$1\c
+'if n \\&\\$1\c
+'if n \&"
+\\&\\$2 \\$3 \\$4 \\$5 \\$6 \\$7
+'.ft R
+..
+.\" @(#)ms.acc 1.5 88/02/08 SMI; from UCB 4.2
+.	\" AM - accent mark definitions
+.bd B 3
+.	\" fudge factors for nroff and troff
+.if n \{\
+.	ds #H 0
+.	ds #V .8m
+.	ds #F .3m
+.	ds #[ \f1
+.	ds #] \fP
+.\}
+.if t \{\
+.	ds #H ((1u-(\\\\n(.fu%2u))*.13m)
+.	ds #V .6m
+.	ds #F 0
+.	ds #[ \&
+.	ds #] \&
+.\}
+.	\" simple accents for nroff and troff
+.if n \{\
+.	ds ' \&
+.	ds ` \&
+.	ds ^ \&
+.	ds , \&
+.	ds ~ ~
+.	ds ? ?
+.	ds ! !
+.	ds /
+.	ds q
+.\}
+.if t \{\
+.	ds ' \\k:\h'-(\\n(.wu*8/10-\*(#H)'\'\h"|\\n:u"
+.	ds ` \\k:\h'-(\\n(.wu*8/10-\*(#H)'\`\h'|\\n:u'
+.	ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'^\h'|\\n:u'
+.	ds , \\k:\h'-(\\n(.wu*8/10)',\h'|\\n:u'
+.	ds ~ \\k:\h'-(\\n(.wu-\*(#H-.1m)'~\h'|\\n:u'
+.	ds ? \s-2c\h'-\w'c'u*7/10'\u\h'\*(#H'\zi\d\s+2\h'\w'c'u*8/10'
+.	ds ! \s-2\(or\s+2\h'-\w'\(or'u'\v'-.8m'.\v'.8m'
+.	ds / \\k:\h'-(\\n(.wu*8/10-\*(#H)'\z\(sl\h'|\\n:u'
+.	ds q o\h'-\w'o'u*8/10'\s-4\v'.4m'\z\(*i\v'-.4m'\s+4\h'\w'o'u*8/10'
+.\}
+.	\" troff and (daisy-wheel) nroff accents
+.ds : \\k:\h'-(\\n(.wu*8/10-\*(#H+.1m+\*(#F)'\v'-\*(#V'\z.\h'.2m+\*(#F'.\h'|\\n:u'\v'\*(#V'
+.ds 8 \h'\*(#H'\(*b\h'-\*(#H'
+.ds v \\k:\h'-(\\n(.wu*9/10-\*(#H)'\v'-\*(#V'\*(#[\s-4v\s0\v'\*(#V'\h'|\\n:u'\*(#]
+.ds _ \\k:\h'-(\\n(.wu*9/10-\*(#H+(\*(#F*2/3))'\v'-.4m'\z\(hy\v'.4m'\h'|\\n:u'
+.ds . \\k:\h'-(\\n(.wu*8/10)'\v'\*(#V*4/10'\z.\v'-\*(#V*4/10'\h'|\\n:u'
+.ds 3 \*(#[\v'.2m'\s-2\&3\s0\v'-.2m'\*(#]
+.ds o \\k:\h'-(\\n(.wu+\w'\(de'u-\*(#H)/2u'\v'-.3n'\*(#[\z\(de\v'.3n'\h'|\\n:u'\*(#]
+.ds d- \h'\*(#H'\(pd\h'-\w'~'u'\v'-.25m'\f2\(hy\fP\v'.25m'\h'-\*(#H'
+.ds D- D\\k:\h'-\w'D'u'\v'-.11m'\z\(hy\v'.11m'\h'|\\n:u'
+.ds th \*(#[\v'.3m'\s+1I\s-1\v'-.3m'\h'-(\w'I'u*2/3)'\s-1o\s+1\*(#]
+.ds Th \*(#[\s+2I\s-2\h'-\w'I'u*3/5'\v'-.3m'o\v'.3m'\*(#]
+.ds ae a\h'-(\w'a'u*4/10)'e
+.ds Ae A\h'-(\w'A'u*4/10)'E
+.ds oe o\h'-(\w'o'u*4/10)'e
+.ds Oe O\h'-(\w'O'u*4/10)'E
+.	\" corrections for vroff
+.if v .ds ~ \\k:\h'-(\\n(.wu*9/10-\*(#H)'\s-2\u~\d\s+2\h'|\\n:u'
+.if v .ds ^ \\k:\h'-(\\n(.wu*10/11-\*(#H)'\v'-.4m'^\v'.4m'\h'|\\n:u'
+.	\" for low resolution devices (crt and lpr)
+.if \n(.H>23 .if \n(.V>19 \
+\{\
+.	ds : e
+.	ds 8 ss
+.	ds v \h'-1'\o'\(aa\(ga'
+.	ds _ \h'-1'^
+.	ds . \h'-1'.
+.	ds 3 3
+.	ds o a
+.	ds d- d\h'-1'\(ga
+.	ds D- D\h'-1'\(hy
+.	ds th \o'bp'
+.	ds Th \o'LP'
+.	ds ae ae
+.	ds Ae AE
+.	ds oe oe
+.	ds Oe OE
+.\}
+.rm #[ #] #H #V #F C
+.SH "NAME"
+pflogsumm.pl \- Produce Postfix MTA logfile summary
+.PP
+Copyright (C) 1998-2003 by James S. Seymour, Release 1.1.0.
+.SH "SYNOPSIS"
+.PP
+.Vb 7
+\&    pflogsumm.pl -[eq] [-d <today|yesterday>] [-h <cnt>] [-u <cnt>]
+\&        [--verp_mung[=<n>]] [--verbose_msg_detail] [--iso_date_time]
+\&        [-m|--uucp_mung] [-i|--ignore_case] [--smtpd_stats] [--mailq]
+\&        [--problems_first] [--rej_add_from] [--no_bounce_detail]
+\&        [--no_deferral_detail] [--no_reject_detail] [--no_no_msg_size]
+\&        [--no_smtpd_warnings] [--zero_fill] [--syslog_name=string]
+\&        [file1 [filen]]
+.Ve
+.Vb 1
+\&    pflogsumm.pl -[help|version]
+.Ve
+.Vb 1
+\&    If no file(s) specified, reads from stdin.  Output is to stdout.
+.Ve
+.SH "DESCRIPTION"
+.PP
+.Vb 8
+\&    Pflogsumm is a log analyzer/summarizer for the Postfix MTA.  It is
+\&    designed to provide an over-view of Postfix activity, with just enough
+\&    detail to give the administrator a "heads up" for potential trouble
+\&    spots.
+\&    
+\&    Pflogsumm generates summaries and, in some cases, detailed reports of
+\&    mail server traffic volumes, rejected and bounced email, and server
+\&    warnings, errors and panics.
+.Ve
+.SH "OPTIONS"
+.PP
+.Vb 2
+\&    -d today       generate report for just today
+\&    -d yesterday   generate report for just "yesterday"
+.Ve
+.Vb 1
+\&    -e             extended (extreme? excessive?) detail
+.Ve
+.Vb 3
+\&                   Emit detailed reports.  At present, this includes
+\&                   only a per-message report, sorted by sender domain,
+\&                   then user-in-domain, then by queue i.d.
+.Ve
+.Vb 3
+\&                   WARNING: the data built to generate this report can
+\&                   quickly consume very large amounts of memory if a
+\&                   lot of log entries are processed!
+.Ve
+.Vb 3
+\&    -h <cnt>       top <cnt> to display in host/domain reports.
+\&    
+\&                   0 = none.
+.Ve
+.Vb 2
+\&                   See also: "-u" and "--no_*_detail" for further
+\&                             report-limiting options.
+.Ve
+.Vb 5
+\&    --help         Emit short usage message and bail out.
+\&    
+\&                   (By happy coincidence, "-h" alone does much the same,
+\&                   being as it requires a numeric argument :-).  Yeah, I
+\&                   know: lame.)
+.Ve
+.Vb 8
+\&    -i
+\&    --ignore_case  Handle complete email address in a case-insensitive
+\&                   manner.
+\&                   
+\&                   Normally pflogsumm lower-cases only the host and
+\&                   domain parts, leaving the user part alone.  This
+\&                   option causes the entire email address to be lower-
+\&                   cased.
+.Ve
+.Vb 1
+\&    --iso_date_time
+.Ve
+.Vb 3
+\&                   For summaries that contain date or time information,
+\&                   use ISO 8601 standard formats (CCYY-MM-DD and HH:MM),
+\&                   rather than "Mon DD CCYY" and "HHMM".
+.Ve
+.Vb 2
+\&    -m             modify (mung?) UUCP-style bang-paths
+\&    --uucp_mung
+.Ve
+.Vb 11
+\&                   This is for use when you have a mix of Internet-style
+\&                   domain addresses and UUCP-style bang-paths in the log.
+\&                   Upstream UUCP feeds sometimes mung Internet domain
+\&                   style address into bang-paths.  This option can
+\&                   sometimes undo the "damage".  For example:
+\&                   "somehost.dom!username@foo" (where "foo" is the next
+\&                   host upstream and "somehost.dom" was whence the email
+\&                   originated) will get converted to
+\&                   "foo!username@somehost.dom".  This also affects the
+\&                   extended detail report (-e), to help ensure that by-
+\&                    domain-by-name sorting is more accurate.
+.Ve
+.Vb 5
+\&    --mailq        Run "mailq" command at end of report.
+\&    
+\&                   Merely a convenience feature.  (Assumes that "mailq"
+\&                   is in $PATH.  See "$mailqCmd" variable to path thisi
+\&                   if desired.)
+.Ve
+.Vb 3
+\&    --no_bounce_detail
+\&    --no_deferral_detail
+\&    --no_reject_detail
+.Ve
+.Vb 2
+\&                   Suppresses the printing of the following detailed
+\&                   reports, respectively:
+.Ve
+.Vb 3
+\&                        message bounce detail (by relay)
+\&                        message deferral detail
+\&                        message reject detail
+.Ve
+.Vb 2
+\&                   See also: "-u" and "-h" for further report-limiting
+\&                             options.
+.Ve
+.Vb 1
+\&    --no_no_msg_size
+.Ve
+.Vb 1
+\&                    Do not emit report on "Messages with no size data".
+.Ve
+.Vb 8
+\&                    Message size is reported only by the queue manager.
+\&                    The message may be delivered long-enough after the
+\&                    (last) qmgr log entry that the information is not in
+\&                    the log(s) processed by a particular run of
+\&                    pflogsumm.pl.  This throws off "Recipients by message
+\&                    size" and the total for "bytes delivered." These are
+\&                    normally reported by pflogsumm as "Messages with no
+\&                    size data."
+.Ve
+.Vb 1
+\&    --no_smtpd_warnings
+.Ve
+.Vb 3
+\&                    On a busy mail server, say at an ISP, SMTPD warnings
+\&                    can result in a rather sizeable report.  This option
+\&                    turns reporting them off.
+.Ve
+.Vb 1
+\&    --problems_first
+.Ve
+.Vb 2
+\&                   Emit "problems" reports (bounces, defers, warnings,
+\&                   etc.) before "normal" stats.
+.Ve
+.Vb 5
+\&    --rej_add_from
+\&                   For those reject reports that list IP addresses or
+\&                   host/domain names: append the email from address to
+\&                   each listing.  (Does not apply to "Improper use of
+\&                   SMTP command pipelining" report.)
+.Ve
+.Vb 4
+\&    -q             quiet - don't print headings for empty reports
+\&    
+\&                   note: headings for warning, fatal, and "master"
+\&                   messages will always be printed.
+.Ve
+.Vb 1
+\&    --smtpd_stats
+.Ve
+.Vb 1
+\&                   Generate smtpd connection statistics.
+.Ve
+.Vb 3
+\&                   The "per-day" report is not generated for single-day
+\&                   reports.  For multiple-day reports: "per-hour" numbers
+\&                   are daily averages (reflected in the report heading).
+.Ve
+.Vb 1
+\&    --syslog_name=name
+.Ve
+.Vb 1
+\&                   Set syslog_name to look for for Postfix log entries.
+.Ve
+.Vb 5
+\&                   By default, pflogsumm looks for entries in logfiles
+\&                   with a syslog name of "postfix," the default.
+\&                   If you've set a non-default "syslog_name" parameter
+\&                   in your Postfix configuration, use this option to
+\&                   tell pflogsumm what that is.
+.Ve
+.Vb 2
+\&                   See the discussion about the use of this option under
+\&                   "NOTES," below.
+.Ve
+.Vb 1
+\&    -u <cnt>       top <cnt> to display in user reports. 0 == none.
+.Ve
+.Vb 2
+\&                   See also: "-h" and "--no_*_detail" for further
+\&                             report-limiting options.
+.Ve
+.Vb 1
+\&    --verbose_msg_detail
+.Ve
+.Vb 2
+\&                   For the message deferral, bounce and reject summaries:
+\&                   display the full "reason", rather than a truncated one.
+.Ve
+.Vb 1
+\&                   Note: this can result in quite long lines in the report.
+.Ve
+.Vb 5
+\&    --verp_mung    do "VERP" generated address (?) munging.  Convert
+\&    --verp_mung=2  sender addresses of the form
+\&                   "list-return-NN-someuser=some.dom@host.sender.dom"
+\&                    to
+\&                      "list-return-ID-someuser=some.dom@host.sender.dom"
+.Ve
+.Vb 1
+\&                    In other words: replace the numeric value with "ID".
+.Ve
+.Vb 3
+\&                   By specifying the optional "=2" (second form), the
+\&                   munging is more "aggressive", converting the address
+\&                   to something like:
+.Ve
+.Vb 1
+\&                        "list-return@host.sender.dom"
+.Ve
+.Vb 3
+\&                   Actually: specifying anything less than 2 does the
+\&                   "simple" munging and anything greater than 1 results
+\&                   in the more "aggressive" hack being applied.
+.Ve
+.Vb 1
+\&                   See "NOTES" regarding this option.
+.Ve
+.Vb 1
+\&    --version      Print program name and version and bail out.
+.Ve
+.Vb 2
+\&    --zero_fill    "Zero-fill" certain arrays so reports come out with
+\&                   data in columns that that might otherwise be blank.
+.Ve
+.SH "RETURN VALUE"
+.PP
+.Vb 1
+\&    Pflogsumm doesn't return anything of interest to the shell.
+.Ve
+.SH "ERRORS"
+.PP
+.Vb 1
+\&    Error messages are emitted to stderr.
+.Ve
+.SH "EXAMPLES"
+.PP
+.Vb 1
+\&    Produce a report of previous day's activities:
+.Ve
+.Vb 1
+\&        pflogsumm.pl -d yesterday /var/log/maillog
+.Ve
+.Vb 1
+\&    A report of prior week's activities (after logs rotated):
+.Ve
+.Vb 1
+\&        pflogsumm.pl /var/log/maillog.0
+.Ve
+.Vb 1
+\&    What's happened so far today:
+.Ve
+.Vb 1
+\&        pflogsumm.pl -d today /var/log/maillog
+.Ve
+.Vb 2
+\&    Crontab entry to generate a report of the previous day's activity
+\&    at 10 minutes after midnight.
+.Ve
+.Vb 2
+\&        10 0 * * * /usr/local/sbin/pflogsumm -d yesterday /var/log/maillog
+\&        2>&1 |/usr/bin/mailx -s "`uname -n` daily mail stats" postmaster
+.Ve
+.Vb 3
+\&    Crontab entry to generate a report for the prior week's activity.
+\&    (This example assumes one rotates ones mail logs weekly, some time
+\&    before 4:10 a.m. on Sunday.)
+.Ve
+.Vb 2
+\&        10 4 * * 0   /usr/local/sbin/pflogsumm /var/log/maillog.0
+\&        2>&1 |/usr/bin/mailx -s "`uname -n` weekly mail stats" postmaster
+.Ve
+.Vb 3
+\&    The two crontab examples, above, must actually be a single line
+\&    each.  They're broken-up into two-or-more lines due to page
+\&    formatting issues.
+.Ve
+.SH "SEE ALSO"
+.PP
+.Vb 1
+\&    The pflogsumm FAQ: pflogsumm-faq.txt.
+.Ve
+.SH "NOTES"
+.PP
+.Vb 3
+\&    Pflogsumm makes no attempt to catch/parse non-Postfix log
+\&    entries.  Unless it has "postfix/" in the log entry, it will be
+\&    ignored.
+.Ve
+.Vb 3
+\&    It's important that the logs are presented to pflogsumm in
+\&    chronological order so that message sizes are available when
+\&    needed.
+.Ve
+.Vb 8
+\&    For display purposes: integer values are munged into "kilo" and
+\&    "mega" notation as they exceed certain values.  I chose the
+\&    admittedly arbitrary boundaries of 512k and 512m as the points at
+\&    which to do this--my thinking being 512x was the largest number
+\&    (of digits) that most folks can comfortably grok at-a-glance.
+\&    These are "computer" "k" and "m", not 1000 and 1,000,000.  You
+\&    can easily change all of this with some constants near the
+\&    beginning of the program.
+.Ve
+.Vb 3
+\&    "Items-per-day" reports are not generated for single-day
+\&    reports.  For multiple-day reports: "Items-per-hour" numbers are
+\&    daily averages (reflected in the report headings).
+.Ve
+.Vb 3
+\&    Message rejects, reject warnings, holds and discards are all
+\&    reported under the "rejects" column for the Per-Hour and Per-Day
+\&    traffic summaries.
+.Ve
+.Vb 2
+\&    Verp munging may not always result in correct address and
+\&    address-count reduction.
+.Ve
+.Vb 3
+\&    Verp munging is always in a state of experimentation.  The use
+\&    of this option may result in inaccurate statistics with regards
+\&    to the "senders" count.
+.Ve
+.Vb 5
+\&    UUCP-style bang-path handling needs more work.  Particularly if
+\&    Postfix is not being run with "swap_bangpath = yes" and/or *is* being
+\&    run with "append_dot_mydomain = yes", the detailed by-message report
+\&    may not be sorted correctly by-domain-by-user.  (Also depends on
+\&    upstream MTA, I suspect.)
+.Ve
+.Vb 3
+\&    The "percent rejected" and "percent discarded" figures are only
+\&    approximations.  They are calculated as follows (example is for
+\&    "percent rejected"):
+.Ve
+.Vb 3
+\&        percent rejected =
+\&        
+\&            (rejected / (delivered + rejected + discarded)) * 100
+.Ve
+.Vb 4
+\&    There are some issues with the use of --syslog_name.  The problem is
+\&    that, even with $syslog_name set, Postfix will sometimes still log
+\&    things with "postfix" as the syslog_name.  This is noted in
+\&    /etc/postfix/sample-misc.cf:
+.Ve
+.Vb 5
+\&        # Beware: a non-default syslog_name setting takes effect only
+\&        # after process initialization. Some initialization errors will be
+\&        # logged with the default name, especially errors while parsing
+\&        # the command line and errors while accessing the Postfix main.cf
+\&        # configuration file.
+.Ve
+.Vb 2
+\&    As a consequence, pflogsumm must always look for "postfix," in logs,
+\&    as well as whatever is supplied for syslog_name.
+.Ve
+.Vb 2
+\&    Where this becomes an issue is where people are running two or more
+\&    instances of Postfix, logging to the same file.  In such a case:
+.Ve
+.Vb 2
+\&        . Neither instance may use the default "postfix" syslog name
+\&          and...
+.Ve
+.Vb 4
+\&        . Log entries that fall victim to what's described in
+\&          sample-misc.cf will be reported under "postfix", so that if
+\&          you're running pflogsumm twice, once for each syslog_name, such
+\&          log entries will show up in each report.
+.Ve
+.Vb 1
+\&    The Pflogsumm Home Page is at:
+.Ve
+.Vb 1
+\&        http://jimsun.LinxNet.com/postfix_contrib.html
+.Ve
+.SH "REQUIREMENTS"
+.PP
+.Vb 2
+\&    Pflogsumm requires the Date::Calc module, which can be obtained from
+\&    CPAN at http://www.perl.com.
+.Ve
+.Vb 3
+\&    Pflogsumm is currently written and tested under Perl 5.005_03.
+\&    As of version 19990413-02, pflogsumm worked with Perl 5.003, but
+\&    future compatibility is not guaranteed.
+.Ve
+.SH "LICENSE"
+.PP
+.Vb 17
+\&    This program is free software; you can redistribute it and/or
+\&    modify it under the terms of the GNU General Public License
+\&    as published by the Free Software Foundation; either version 2
+\&    of the License, or (at your option) any later version.
+\&    
+\&    This program is distributed in the hope that it will be useful,
+\&    but WITHOUT ANY WARRANTY; without even the implied warranty of
+\&    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+\&    GNU General Public License for more details.
+\&    
+\&    You may have received a copy of the GNU General Public License
+\&    along with this program; if not, write to the Free Software
+\&    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+\&    USA.
+\&    
+\&    An on-line copy of the GNU General Public License can be found
+\&    http://www.fsf.org/copyleft/gpl.html.
+.Ve
+
+.rn }` ''
+.IX Title "PFLOGSUMM 1"
+.IX Name "pflogsumm.pl - Produce Postfix MTA logfile summary"
+
+.IX Header "NAME"
+
+.IX Header "SYNOPSIS"
+
+.IX Header "DESCRIPTION"
+
+.IX Header "OPTIONS"
+
+.IX Header "RETURN VALUE"
+
+.IX Header "ERRORS"
+
+.IX Header "EXAMPLES"
+
+.IX Header "SEE ALSO"
+
+.IX Header "NOTES"
+
+.IX Header "REQUIREMENTS"
+
+.IX Header "LICENSE"
+

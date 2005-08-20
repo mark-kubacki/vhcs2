@@ -1,0 +1,336 @@
+{config_load file=$umLanguageFile section="Preferences"}
+<html>
+<head>
+<title>Webmail</title>
+<meta http-equiv="Content-Type" content="text/html; charset={#default_char_set#}">
+	<script language="JavaScript" src="themes/default/webmail.js" type="text/javascript"></script>
+	<script language="JavaScript" src="themes/red/js.js" type="text/javascript"></script>
+	{$umJS}
+<link rel="stylesheet" href="themes/red/css/vhcs.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td height="82" width="34"><img src="themes/red/images/top1.jpg" width="34" height="82"></td>
+    <td height="82" width="59"><img src="themes/red/images/theme/vhcs.jpg" width="59" height="82"></td>
+    <td height="82" width="17"><img src="themes/red/images/top3.jpg" width="17" height="82"></td>
+    <td height="82" width="147"><img src="themes/red/images/top4.jpg" width="147" height="82"></td>
+    <td height="82" width="150"><img src="themes/red/images/top5.jpg" width="150" height="82"></td>
+    <td height="82" background="themes/red/images/top6.jpg"><img src="themes/red/images/top6.jpg" width="4" height="82"></td>
+    <td height="82" background="themes/red/images/top6.jpg" align="right"><img src="themes/red/images/theme/isp_logo.jpg" width="345" height="82"></td>
+  </tr>
+</table>
+<table width="750" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td valign="top" width="1"> 
+
+
+<!--menutable -->
+
+
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="31"><img src="themes/red/images/menu_top_left.jpg" width="31" height="15"></td>
+          <td background="themes/red/images/menu_top_background.jpg"><img src="themes/red/images/menu_top_background.jpg" width="5" height="15"></td>
+          <td width="30"><img src="themes/red/images/menu_top_right.jpg" width="30" height="15"></td>
+        </tr>
+        <tr> 
+          <td width="31"><img src="themes/red/images/menu_top_left2.jpg" width="31" height="19"></td>
+          <td background="themes/red/images/menu_top.jpg" align="center"><img src="themes/red/images/theme/menu_top.jpg" width="186" height="19"></td>
+          <td width="30"><img src="themes/red/images/menu_top_right2.jpg" width="30" height="19"></td>
+        </tr>
+        <tr> 
+          <td background="themes/red/images/menu_left_background.jpg"><img src="themes/red/images/trans.gif" width="31" height="1"></td>
+          <td background="themes/red/images/menu_background.jpg" valign="top" nowrap> 
+
+
+<!-- menus -->
+
+            <table width="100" border="0" cellspacing="0" cellpadding="0" align="center">
+              <tr> 
+                <td width="23" height="8"><img src="themes/red/images/trans.gif" width="10" height="15"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td width="23" height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:goinbox()" onMouseOver=over(1); onMouseOut=out(1);><img src="themes/red/images/menubutton_left.gif" name="image1_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id1" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:goinbox()" class="menu" onMouseOver=over(1); onMouseOut=out(1);>{#messages_mnu#}</a></td>
+                <td width="23"><a href="javascript:goinbox()" onMouseOver=over(1); onMouseOut=out(1);><img src="themes/red/images/menubutton_right.gif" name="image1_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:newmsg()" onMouseOver=over(2); onMouseOut=out(2);><img src="themes/red/images/menubutton_left.gif" name="image2_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id2" background="themes/red/images/menubutton_background.gif"  onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:newmsg()" class="menu" onMouseOver=over(2); onMouseOut=out(2);>{#compose_mnu#}</a></td>
+                <td width="23"><a href="javascript:newmsg()" onMouseOver=over(2); onMouseOut=out(2);><img src="themes/red/images/menubutton_right.gif" name="image2_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="#"  onMouseOver=over(3); onMouseOut=out(3);><img src="themes/red/images/menubutton_left.gif" name="image3_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id3" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="#" class="menu" onMouseOver=over(3); onMouseOut=out(3);>{#refresh_mnu#}</a></td>
+                <td width="23"><a href="#"  onMouseOver=over(3); onMouseOut=out(3);><img src="themes/red/images/menubutton_right.gif" name="image3_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:folderlist()" onMouseOver=over(4); onMouseOut=out(4);><img src="themes/red/images/menubutton_left.gif" name="image4_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id4" background="themes/red/images/menubutton_background.gif"  onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:folderlist()" class="menu" onMouseOver=over(4); onMouseOut=out(4);>{#folders_mnu#}</a></td>
+                <td width="23"><a href="javascript:folderlist()" onMouseOver=over(4); onMouseOut=out(4);><img src="themes/red/images/menubutton_right.gif" name="image4_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:search()" onMouseOver=over(5); onMouseOut=out(5);><img src="themes/red/images/menubutton_left.gif" name="image5_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id5" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:search()" class="menu" onMouseOver=over(5); onMouseOut=out(5);>{#search_mnu#}</a></td>
+                <td width="23"><a href="javascript:search()" onMouseOver=over(5); onMouseOut=out(5);><img src="themes/red/images/menubutton_right.gif" name="image5_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:addresses()"  onMouseOver=over(6); onMouseOut=out(6);><img src="themes/red/images/menubutton_left.gif" name="image6_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id6" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:addresses()" class="menu" onMouseOver=over(6); onMouseOut=out(6);>{#address_mnu#}</a></td>
+                <td width="23"><a href="javascript:addresses()"  onMouseOver=over(6); onMouseOut=out(6);><img src="themes/red/images/menubutton_right.gif" name="image6_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:emptytrash()"  onMouseOver=over(7); onMouseOut=out(7);><img src="themes/red/images/menubutton_left.gif" name="image7_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id7" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:emptytrash()" class="menu" onMouseOver=over(7); onMouseOut=out(7);>{#empty_trash_mnu#}</a></td>
+                <td width="23"><a href="javascript:emptytrash()"  onMouseOver=over(7); onMouseOut=out(7);><img src="themes/red/images/menubutton_right.gif" name="image7_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="#"><img src="themes/red/images/theme/menu_button_left.gif" name="image8_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id8" background="themes/red/images/theme/menu_button_background.gif" ><a href="#" class="menu">{#prefs_mnu#}</a></td>
+                <td width="23"><a href="#"><img src="themes/red/images/theme/menu_button_right.gif" name="image8_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+              <tr> 
+                <td width="23"><a href="javascript:goend()"  onMouseOver=over(9); onMouseOut=out(9);><img src="themes/red/images/menubutton_left.gif" name="image9_1" width="23" height="23" border="0"></a></td>
+                <td nowrap id="id9" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="javascript:goend()" class="menu" onMouseOver=over(9); onMouseOut=out(9);>{#logoff_mnu#}</a></td>
+                <td width="23"><a href="javascript:goend()"  onMouseOver=over(9); onMouseOut=out(9);><img src="themes/red/images/menubutton_right.gif" name="image9_2" width="23" height="23" border="0"></a></td>
+              </tr>
+              <tr> 
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="15"></td>
+                <td nowrap height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+                <td height="8"><img src="themes/red/images/trans.gif" width="10" height="8"></td>
+              </tr>
+            </table>
+
+<!-- end of menus -->
+
+
+          </td>
+          <td background="themes/red/images/menu_right_background.jpg"><img src="themes/red/images/trans.gif" width="30" height="1"></td>
+        </tr>
+        <tr> 
+          <td width="31"><img src="themes/red/images/menu_down_left2.jpg" width="31" height="16"></td>
+          <td align="center" background="themes/red/images/menu_down.jpg"><img src="themes/red/images/theme/menu_down.jpg" width="186" height="16"></td>
+          <td width="30"><img src="themes/red/images/menu_down_right2.jpg" width="30" height="16"></td>
+        </tr>
+        <tr> 
+          <td width="31"><img src="themes/red/images/menu_down_left.jpg" width="31" height="14"></td>
+          <td background="themes/red/images/menu_down_background.jpg"><img src="themes/red/images/menu_down_background.jpg" width="1" height="14"></td>
+          <td width="30"><img src="themes/red/images/menu_down_right.jpg" width="30" height="14"></td>
+        </tr>
+      </table>
+
+
+<!-- end of menutable -->
+
+
+
+    </td>
+    <td width="20"><img src="themes/red/images/trans.gif" width="20" height="1"></td>
+    <td valign="top"> 
+      <table width="100" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="18"><img src="themes/red/images/table/top_left.jpg" width="18" height="15"></td>
+          <td background="themes/red/images/table/top_background.jpg"><img src="themes/red/images/table/top_background.jpg" width="1" height="15"></td>
+          <td width="21"><img src="themes/red/images/table/top_right.jpg" width="21" height="15"></td>
+        </tr>
+        <tr> 
+          <td width="18"><img src="themes/red/images/table/top_left2.jpg" width="18" height="23"></td>
+          <td background="themes/red/images/table/title_background.jpg"> 
+            
+<!-- content -->
+
+
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr> 
+                <td rowspan="2" width="18" height="19"><img src="themes/red/images/theme/point.gif" width="18" height="19"></td>
+                <td class="title"> &nbsp;{#prefs_mnu#}</td>
+              </tr>
+              <tr> 
+                <td background="themes/red/images/table/title_line.gif"><img src="themes/red/images/table/title_line.gif" width="1" height="4"></td>
+              </tr>
+            </table>
+          </td>
+          <td width="21"><img src="themes/red/images/table/top_right2.jpg" width="21" height="23"></td>
+        </tr>
+        <tr> 
+          <td width="18" background="themes/red/images/table/left_background.jpg">&nbsp;</td>
+          <td height="310" valign="top" background="themes/red/images/table/background.jpg">		  
+		  
+		  
+		  <table cellspacing=4 width="100%">
+				<form name=form1 action=preferences.php method=POST>
+				<input type=hidden name=sid value="{$umSid}">
+				<input type=hidden name=lid value="{$umLid}">
+				<input type=hidden name=tid value="{$umTid}">
+				<tr>
+					<td colspan=2 class=content><b>{#prf_general_title#}</b></td>
+				</tr>
+				<tr>
+					<td class="content2" size="20%"> &nbsp;{#prf_name#}</td>
+					<td ><input type=text name=f_real_name size=30 value="{$umRealName|escape:"html"}" class="textinput"></td>
+				</tr>
+				<tr>
+					<td class="content2"> &nbsp;{#prf_reply_to#}</td>
+					<td><input type=text name=f_reply_to size=30 value="{$umReplyTo|escape:"html"}" class="textinput"></td>
+				</tr>
+				<tr>
+					<td class="content2"> &nbsp;{#prf_time_zone#}</td>
+					<td>{$umTimezoneSelect}</td>
+				</tr>
+				<tr>
+					<td class="content2"> &nbsp;{#prf_default_editor_mode#}</td>
+					<td>
+					<select name="f_editor_mode">
+						<option value="text"{if $umEditorMode eq "text"} selected{/if}>{#prf_default_editor_mode_text#}
+						<option value="html"{if $umEditorMode eq "html"} selected{/if}>{#prf_default_editor_mode_html#}
+					</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan=2 class=content><b>{#prf_trash_title#}</b></td>
+				</tr>
+				<tr>
+					<td class="content3" colspan=2><input type=checkbox name=f_save_trash onClick="dis()" value="1"{$umSaveTrash}><acronym style="cursor: hand;" OnClick="f_save_trash.click()">{#prf_save_to_trash#} "<b>{#trash_extended#}</b>"</acronym></td>
+				</tr>
+				<tr>
+					<td class="content3" colspan=2><input type=checkbox name=f_st_only_read onClick="return checkDis()" value="1"{$umSaveTrashOnlyRead}><acronym style="cursor: hand;" OnClick="f_st_only_read.click()">{#prf_save_only_read#} "<b>{#trash_extended#}</b>"</acronym></td>
+				</tr>
+				<tr>
+					<td class="content3" colspan=2><input type=checkbox name=f_empty_on_exit value="1"{$umEmptyTrashOnExit}><acronym style="cursor: hand;" OnClick="f_empty_on_exit.click()">{#prf_empty_on_exit#}</acronym></td>
+				</tr>
+				<tr>
+					<td colspan=2  class=content><b>{#prf_sent_title#}</b></td>
+				</tr>
+				<tr>
+					<td class="content3" colspan=2><input type=checkbox name=f_save_sent value="1"{$umSaveSent}><acronym style="cursor: hand;" OnClick="f_save_sent.click()">{#prf_save_sent#} "<b>{#sent_extended#}</b>"</acronym></td>
+				</tr>
+				<tr>
+					<td colspan=2  class=content><b>{#prf_messages_title#}</b></td>
+				</tr>
+				<tr>
+					<td class="content2"> &nbsp;{#prf_page_limit#}</td>
+					<td class="content3">{$umRecordsPerPage}</td>
+				</tr>
+				<tr>
+					<td class="content2"> &nbsp;{#prf_time_to_refesh#}</td>
+					<td class="content3">{$umTimeToRefresh}</td>
+				</tr>
+
+				<tr>
+					<td colspan=2  class="content3"><input type=checkbox name=f_display_images value="1"{$umDisplayImages}><acronym style="cursor: hand;" OnClick="f_display_images.click()">{#prf_display_images#}</acronym></td>
+				</tr>
+
+				<tr>
+					<td colspan=2  class=content><b>{#prf_signature_title#}</b></td>
+				</tr>
+				<tr>
+					<td class="content2" valign=top> &nbsp;{#prf_signature#}</td>
+					<td class="content3">{$umSignature}</td>
+				</tr>
+				<tr>
+					<td class="content3" colspan=2><input type=checkbox name=f_add_sig value="1"{$umAddSignature}><acronym style="cursor: hand;" OnClick="f_add_sig.click()">{#prf_auto_add_sign#}</acronym> </td>
+				</tr>
+				<tr>
+					<td bgcolor=white></td>
+					<td bgcolor=white><br>
+					<table border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td width="23"><a href="#"  onMouseOver=over(40); onMouseOut=out(40); onClick="return sbmt(document.forms[0]);"><img src="themes/red/images/menubutton_left.gif" name="image40_1" width="23" height="23" border="0"></a></td>
+                            <td nowrap id="id40" background="themes/red/images/menubutton_background.gif" onMouseOver="this.style.backgroundImage='url(themes/red/images/theme/menu_button_background.gif)'" onMouseOut="this.style.backgroundImage='url(themes/red/images/menubutton_background.gif)'"><a href="#" class="menu" onMouseOver=over(40); onMouseOut=out(40); onClick="return sbmt(document.forms[0]);">{#prf_save_button#}</a></td>
+                            <td width="23"><a href="#"  onMouseOver=over(40); onMouseOut=out(40);onClick="return sbmt(document.forms[0]);"><img src="themes/red/images/menubutton_right.gif" name="image40_2" width="23" height="23" border="0"></a></td>
+                          </tr>
+                        </table>
+						</td>
+				</tr>
+				</form>
+			</table>
+
+		  
+		  
+		  
+		  
+		  
+		  
+		    
+			
+			
+			<img src="themes/red/images/trans.gif" width="670" height="1">
+            <!-- end of content --></td>
+          <td background="themes/red/images/table/right_background.jpg" width="21">&nbsp;</td>
+        </tr>
+        <tr> 
+          <td width="18"><img src="themes/red/images/table/down_left.jpg" width="18" height="24"></td>
+          <td background="themes/red/images/table/down_background.jpg"><img src="themes/red/images/table/down_background.jpg" width="1" height="24"></td>
+          <td width="21"><img src="themes/red/images/table/down_right.jpg" width="21" height="24"></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr> 
+    <td height="47" colspan="7"> 
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr> 
+          <td width="34"><img src="themes/red/images/down_left.jpg" width="34" height="50"></td>
+          <td background="themes/red/images/down_background.jpg"> 
+            <table border="0" cellspacing="0" cellpadding="0" width="100" align="center">
+              <tr> 
+                <td width="13"><img src="themes/red/images/theme/down_content_left.jpg" width="13" height="24"></td>
+                <td class="bottom" background="themes/red/images/theme/down_content_background.jpg" nowrap>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VHCS Webmail powered by UebiMiau!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                <td width="13"><img src="themes/red/images/theme/down_content_right.jpg" width="13" height="24"></td>
+              </tr>
+            </table>
+          </td>
+          <td width="34"><img src="themes/red/images/down_right.jpg" width="34" height="50"></td>
+        </tr>
+    </table>    </td>
+  </tr>
+</table>
+</body>
+</html>

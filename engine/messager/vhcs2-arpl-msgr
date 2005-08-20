@@ -1,0 +1,267 @@
+#!/usr/bin/perl
+
+# VHCS(tm) - Virtual Hosting Control System
+# Copyright (c) 2001-2004 by moleSoftware GmbH
+# http://www.molesoftware.com
+#
+#
+# License:
+#    This program is free software; you can redistribute it and/or
+#    modify it under the terms of the MPL Mozilla Public License
+#    as published by the Free Software Foundation; either version 1.1    
+#    of the License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+#    MPL Mozilla Public License for more details.
+#    
+#    You may have received a copy of the MPL Mozilla Public License
+#    along with this program.
+#    
+#    An on-line copy of the MPL Mozilla Public License can be found
+#    http://www.mozilla.org/MPL/MPL-1.1.html
+#
+#
+# The VHCS Home Page is at:
+#
+#    http://www.vhcs.net
+
+
+require '/var/www/vhcs2/engine/vhcs2_common_code.pl';
+
+use strict;
+
+use warnings;
+
+my @msg_rows = <STDIN>;
+
+my $msg = join('', @msg_rows);
+
+sub arpl_msgr_start_up {
+    
+    my ($rs, $rdata) = (undef, undef);
+    
+    push_el(\@main::el, 'arpl_msgr_start_up()', 'Starting...');
+    
+    # Let's clear Execution Logs, if any.
+    
+    if (-e $main::vhcs2_arpl_msgr_el) {
+        
+        $rs = del_file($main::vhcs2_arpl_msgr_el);
+        
+        return $rs if ($rs != 0);
+        
+    }
+    
+    # config check;
+    
+    $rs = get_conf();
+    
+    return $rs if ($rs != 0);
+    
+    # sql check;
+   
+    #
+    # getting initial data also must be done here;
+    #
+    
+    my $sql = "select * from domain;";
+    
+    ($rs, $rdata) = doSQL($sql);
+    
+    return $rs if ($rs != 0);
+    
+    push_el(\@main::el, 'arpl_msgr_start_up()', 'Ending...');
+    
+    return 0;
+    
+}
+
+sub arpl_msgr_shut_down {
+    
+    my $rs = undef;
+    
+    push_el(\@main::el, 'arpl_msgr_shut_down()', 'Starting...');
+    
+    $main::db -> disconnect;
+    
+    push_el(\@main::el, 'arpl_msgr_shut_down()', 'Ending...');
+    
+    return 0;
+    
+}
+
+sub arpl_msgr_engine {
+    
+    my $cmd = undef;
+    
+    push_el(\@main::el, 'arpl_msgr_engine()', 'Starting...');
+    
+    my $msg_parser = new MIME::Parser;
+    
+    $msg_parser -> output_to_core(1);
+    
+    my $msg_entity = $msg_parser -> parse_data($msg);
+    
+    my $head = $msg_entity -> head();
+    
+    my $from_ma = $head -> get('From');
+   
+    my $to_ma = $head -> get('To');
+    
+    $from_ma = $1 if ($from_ma =~ /([^\n\r]+)[\n\r]/);
+    
+    $to_ma = $1 if ($to_ma =~ /([^\n\r]+)[\n\r]/);
+    
+    $from_ma = $1 if ($from_ma =~ /\<([^\>]+)\>/);
+    
+    $to_ma = $1 if ($to_ma =~ /\<([^\>]+)\>/);
+    
+    push_el(\@main::el, 'arpl_msgr_engine():', ">>> From: |$from_ma|, To: |$to_ma|");
+    
+    if ($to_ma ne $from_ma) {
+        
+        push_el(\@main::el, 'arpl_msgr_engine():', "loop!");
+        
+        my $ma = "$to_ma\n";
+        
+        return 0 if (!($ma =~ /^([^\@]+)\@([^\n]+)\n$/));
+        
+        my ($user, $dmn) = ($1, $2);
+        
+        
+        my ($sql, $rs, $ref, $dmn_id, $sub_id, $pt) = (undef, undef, undef, undef, undef, undef);
+        
+        
+        $sql = "select count(domain_id) as cnt from domain where domain_name = '$dmn'";
+        
+        
+        ($rs, $ref) = doSQL($sql);
+            
+        return $rs if ($rs != 0);
+        
+        $ref = @$ref[0];
+        
+        if (@$ref[0] == 1) {
+            
+            $pt = 1;
+            
+        } else {
+            
+            $pt = 2;
+            
+        }
+        
+        
+        if ($pt == 1) {
+            
+            $sql = "select domain_id from domain where domain_name = '$dmn';"; 
+            
+            ($rs, $ref) = doSQL($sql);
+            
+            return $rs if ($rs != 0);
+            
+            $ref = @$ref[0]; $dmn_id = @$ref[0];            
+            
+            $sql = "select mail_auto_respond from mail_users where mail_acc = '$user' and domain_id = '$dmn_id';"
+            
+        } elsif ($pt == 2) {
+            
+            $sql = "select subdomain_id from subdomain where subdomain_name = '$dmn';"; 
+            
+            ($rs, $ref) = doSQL($sql);
+            
+            return $rs if ($rs != 0);
+            
+            $ref = @$ref[0]; $sub_id = @$ref[0];
+            
+            $sql = "select mail_auto_respond from mail_users where mail_acc = '$user' and sub_id = '$sub_id';"
+            
+        }
+        
+        
+        ($rs, $ref) = doSQL($sql);
+            
+        return $rs if ($rs != 0);
+        
+        
+        $ref = @$ref[0]; my $auto_message = @$ref[0];
+        
+        my $out = new MIME::Entity;
+            
+        $out -> build(
+                      From => $head -> get('To'),
+                      To => $head -> get('From'),
+                      Subject => "[Auto Replay] for '".$head -> get('Subject')."'.",
+                      Type => "multipart/mixed",
+                      'X-Mailer' => "$main::cfg{'VersionH'} Auto Replay Manager"
+                     );
+        
+        
+        $out -> attach(
+                       Type => "text/plain",
+                       Encoding => "7bit",
+                       Description => "Mail User Auto Replay Message",
+                       Data => $auto_message
+                      );
+        
+        $out -> attach(
+                       Type => "message/rfc822",
+                       Description => "Original Message",
+                       Data => $msg
+                      );
+            
+        open MAIL, "| /usr/sbin/sendmail -t -oi";
+        
+        $out -> print(\*MAIL);
+        
+        close MAIL;
+        
+        
+    }
+    
+    push_el(\@main::el, 'arpl_msgr_engine()', 'Ending...');
+    
+    return 0;
+    
+}
+
+my $rs = undef;
+
+$rs = arpl_msgr_start_up();
+
+if ($rs != 0) {
+    
+    dump_el(\@main::el, $main::vhcs2_arpl_msgr_el);
+    
+    arpl_msgr_shut_down();
+    
+    exit 1;
+    
+}
+
+$rs = arpl_msgr_engine();
+
+if ($rs != 0) {
+    
+    dump_el(\@main::el, $main::vhcs2_arpl_msgr_el);
+    
+    arpl_msgr_shut_down();
+    
+    exit 1;
+    
+}
+
+$rs = arpl_msgr_shut_down();
+
+if ($rs != 0) {
+    
+    dump_el(\@main::el, $main::vhcs2_arpl_msgr_el);
+    
+    exit 1;
+    
+}
+
+exit 0;
+
