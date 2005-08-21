@@ -1,8 +1,8 @@
 #!/usr/local/bin/php
 <?php
-$cfg['dry_run']		= true;
+$cfg['dry_run']		= false;
 
-$cfg['uid_min']		= 500;
+$cfg['uid_min']		= 600;
 $cfg['usergroup']	= 'users';
 $cfg['default_shell']	= '/bin/false';
 
@@ -73,7 +73,7 @@ mysql_connect('localhost', 'vhcs2', 'vhcs2geheim') or die('Could not connect to 
 mysql_select_db('vhcs2') or die('Could not select database');
 
 /////////////// users? ////////////////////
-$query  = 'SELECT domain_name, domain_name as username, domain_disk_limit as quota, domain_cgi as cgi, domain_status as status, admin_id as id, admin_pass as pass, ip_number, email, domain_id';
+$query  = 'SELECT domain_name, admin_name as username, domain_disk_limit as quota, domain_cgi as cgi, domain_status as status, domain_id as id, admin_pass as pass, ip_number, email, domain_id';
 $query .= ' FROM domain,server_ips LEFT JOIN admin ON domain_admin_id=admin_id';
 $query .= ' WHERE (domain_status != "ok" AND domain_status != "disabled") AND domain_ip_id = ip_id';
 $query .= ' ORDER BY domain_id ASC';
@@ -133,7 +133,7 @@ if(mysql_num_rows($result) > 0) {
 			$tmp = file_get_contents($template['awstats']);
 			$tmp = str_replace(array_keys($replacement), array_values($replacement), $tmp);
 			if(!$cfg['dry_run']) {
-			    file_put_contents($path['etc_awstats'].'/awstats.'.$new['username'].'.conf');
+			    file_put_contents($path['etc_awstats'].'/awstats.'.$new['username'].'.conf', $tmp);
 			}
 		    }
 		}
@@ -270,6 +270,6 @@ if(mysql_num_rows($result) > 0) {
 mysql_close();
 /////////////// restart apache ///////////////
 if($apache_restart) {
-    enter($cmd['apache_restart']);
+//    enter($cmd['apache_restart']);
 }
 ?>

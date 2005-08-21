@@ -27,6 +27,7 @@
 </IfDefine>
 
 <Directory %%home%%/html>
+    AllowOverride AuthConfig Indexes Limit FileInfo
     php_admin_value open_basedir "%%home%%/html/:%%home%%/phptmp/:%%home%%/files/:%%home%%/log/"
     php_admin_value file_uploads 1
     php_admin_value upload_tmp_dir "%%home%%/phptmp/"
