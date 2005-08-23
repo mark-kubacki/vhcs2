@@ -14,6 +14,7 @@
     <VirtualHost %%ip_number%%:443>
 	ServerName %%domain_name%%
 	ServerAdmin %%ServerAdmin%%
+	SSLEngine On
 
 	DocumentRoot %%document_root%%
 	SuexecUserGroup %%username%% %%usergroup%%
