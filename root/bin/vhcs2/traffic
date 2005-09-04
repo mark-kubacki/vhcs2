@@ -1,0 +1,79 @@
+#!/usr/bin/perl
+
+use strict;
+use DBI;
+
+my $config_file	= '/etc/vhcs2/vhcs2.conf';
+my %cfg;
+my $dbh;
+
+my %traffic	= { 'sum'	=> {'in'	=> 0,	'out'	=> 0}};
+
+# connect to database, get current traffic, write it to DB and quit
+getConfig();
+$dbh = DBI->connect('DBI:'.$cfg{'DATABASE_TYPE'}.':'.$cfg{'DATABASE_NAME'}.':'.$cfg{'DATABASE_HOST'}, $cfg{'DATABASE_USER'}, $cfg{'DATABASE_PASSWORD'})
+ || die 'Cannot connect to database.';
+    getCurrentTraffic();
+    writeBytesToDB();
+$dbh->disconnect;
+
+print "Sum received bytes:\t".$traffic{'sum'}{'in'}."\n";
+print "Sum send bytes:\t".$traffic{'sum'}{'out'}."\n";
+
+################################################################################
+sub writeBytesToDB {
+################################################################################
+    $dbh->do(qq{
+	INSERT INTO server_traffic (traff_time, bytes_in, bytes_out,
+				    bytes_mail_in, bytes_mail_out,
+				    bytes_pop_in, bytes_pop_out,
+				    bytes_web_in, bytes_web_out)
+	VALUES (UNIX_TIMESTAMP(), $traffic{'sum'}{'in'}, $traffic{'sum'}{'out'}, 
+				  $traffic{'25,465'}{'in'}, $traffic{'25,465'}{'out'},
+				  $traffic{'143,993,110,995'}{'in'}, $traffic{'143,993,110,995'}{'out'},
+				  $traffic{'80,443'}{'in'}, $traffic{'80,443'}{'out'});
+    });
+}
+
+################################################################################
+sub getConfig {
+################################################################################
+    open(CONFIG, $config_file) 
+     || die 'Configuration file not found!';
+    
+    while(<CONFIG>) {
+	if($_ =~ /^(\w+)\s*=\s*(\S+)/) {
+	    $cfg{$1}	= $2;
+	}
+    }
+    
+    close CONFIG;
+}
+
+################################################################################
+sub getCurrentTraffic {
+################################################################################
+    my $direction	= 'in';
+    open(OUTLOG, 'iptables -L traffic -vnx --zero |');
+
+    while(<OUTLOG>) {
+    	if($_ =~ /^\s*(\d+)\s+(\d+)\s*(\w+)\s+\S+\s+(\S*)\s+(\S+)\s+\S+\s+\S+\s*(\S*)\s*(\S*)\s*(\S*)/) {
+#	    print "$3:\tPakete: $1, Bytes $2; $4 <-- $5\n";
+#	    print "$6 $7 $8: $2\n";
+	    if($5 eq '*') {
+		$direction = 'in';
+	    }
+	    else {
+		$direction = 'out';
+	    }
+
+	    if($8 eq '') {
+		$traffic{'sum'}{$direction}	+= $2;
+	    }
+	    else {
+		$traffic{$8}{$direction}	+= $2;
+	    }		
+    	}
+    }
+    close OUTLOG;
+}
