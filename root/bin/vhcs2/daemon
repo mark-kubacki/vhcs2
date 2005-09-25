@@ -2,7 +2,7 @@
 <?php
 $cfg['dry_run']		= false;
 
-$cfg['uid_min']		= 600;
+$cfg['uid_min']		= 1100;
 $cfg['usergroup']	= 'users';
 $cfg['default_shell']	= '/bin/false';
 
@@ -23,7 +23,7 @@ $cmd['adduser']		= 'useradd -m -d %s -G apache,'.$cfg['usergroup'].' -s %s -p \'
 $cmd['deluser']		= 'userdel -r %s';
 $cmd['lockuser']	= 'usermod -L %s';
 $cmd['unlockuser']	= 'usermod -U %s';
-$cmd['create_document_root']	= 'mkdir -m 0755 -p %s && chown %s:apache %s';
+$cmd['create_document_root']	= 'mkdir -m 0770 -p %s && chown -R %s:apache %s';
 $cmd['remove_document_root']	= 'rm -rf %s';
 
 $cmd['quota_add']	= 'quotatool -b -u %s -l %uMB -q %uMB '.$path['quotaroot'];
@@ -69,7 +69,7 @@ function file_put_contents($filename, $data, $file_append = false) {
 }
 
 ////////////// mysql connect ///////////////
-mysql_connect('localhost', 'vhcs2', 'vhcs2geheim') or die('Could not connect to database.');
+mysql_connect('localhost', 'vhcs2', 'berkeley05') or die('Could not connect to database.');
 mysql_select_db('vhcs2') or die('Could not select database');
 
 /////////////// users? ////////////////////
@@ -89,7 +89,7 @@ if(mysql_num_rows($result) > 0) {
 			'username'	=> $row['username'],
 			'cfg'		=> $path['etc_vhosts'].'/61_'.$row['domain_name'].'.conf',
 			);
-	$new['document_root']	= $new['home'].'/html/'.$row['domain_name'].'/www';
+	$new['document_root']	= $new['home'].'/html/www';
 
 	switch($row['status']) {
 	    case 'toadd':
@@ -106,7 +106,7 @@ if(mysql_num_rows($result) > 0) {
 		// Now the domain's directory has to be created.
                 if(!is_dir($new['document_root'])) {
 		    echo('  - creating document_root : '.$new['document_root']."\n");
-		    enter(sprintf($cmd['create_document_root'], $new['document_root'], $new['username'], $new['document_root']));
+		    enter(sprintf($cmd['create_document_root'], $new['document_root'], $new['username'], $new['home'].'/html'));
 		}
 		// Finally we will add an apache-entry.
                 if(!is_file($new['cfg'])) {
@@ -212,7 +212,7 @@ if(mysql_num_rows($result) > 0) {
 			'username'	=> $row['username'],
 			'cfg'		=> $path['etc_vhosts'].'/60_'.$row['domain_name'].'_'.$row['subdomain_name'].'.conf',
 			);
-	$new['document_root']	= $new['home'].'/html/'.$row['domain_name'].$row['subdomain_mount'];
+	$new['document_root']	= $new['home'].'/html'.$row['subdomain_mount'];
 	switch($row['status']) {
 	    case 'toadd':
 		// create document_root if not already present
