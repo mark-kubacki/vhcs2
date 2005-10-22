@@ -1,4 +1,4 @@
-#!/usr/local/bin/php
+#!/bin/env php
 <?php
 $cfg['dry_run']		= false;
 
